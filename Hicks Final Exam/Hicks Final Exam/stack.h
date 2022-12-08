@@ -1,27 +1,35 @@
 #pragma once
 #include <iostream>
-#define MAX_STACK 5
+#define SIZE 5
 
-template<typename T>
+/*
+	Citations
+	1) https://stackoverflow.com/questions/4880447/how-to-check-if-a-linked-list-is-full-using-java#:~:text=There%27s%20no%20such%20concept%20as%20a%20%22full%22%20linked,personally%20keep%20a%20count%20with%20the%20linked%20list.
+	2) https://stackoverflow.com/questions/3928935/size-of-linked-list-in-c-function
+*/
+
 struct Node {
-	T data;
+	int data;
 	Node* link;
 };
 
-template<typename T>
+
 class Stack {
 private:
-	Node<T>* top = NULL;
-	int stack[MAX_STACK] = { 0, };
-public:
-	Stack() { 
+	Node* top;
 	
+public:
+	Stack() {
+		Node* top = NULL;
 	}
+
+	Stack(Stack& top) {
+	//	Node* top = NULL;
+	}
+
 	~Stack() {  }
 
-	Stack()
-
-	void push(T value) {
+	void push(int value) {
 		Node* ptr = new Node();
 		ptr->data = value;
 		ptr->link = top;
@@ -39,36 +47,47 @@ public:
 		}
 	}
 
-	void showTop() {
+	int Top() {
+		if (isEmpty()) {
+			std::cout << "Error: Stack is empty" << std::endl;
+			exit(3);
+		}
+		else {
+			return top->data;
+		}
+	}
+
+	void swap(int a, int b) {
+		int temp;
 		if (isEmpty()) {
 			std::cout << "Stack is Empty";
 		}
 		else {
-			std::cout << top->data;
+			temp = a;
+			a = b;
+			b = temp;
 		}
 	}
 
-	void swap(T* a, T* b) {
-		char* temp;
-		if (isEmpty()) {
-			std::cout << "Stack is Empty";
+	int size() {
+		int count = 0;
+		Node* ptr = top;
+		while (ptr != NULL) {
+			++count;
+			ptr = ptr->link;
 		}
-		else {
-			temp = *a;
-			*a = *b;
-			*b = t;
-		}
+		return count;
 	}
 
-	bool isEmpty() {
-		if (top == NULL)
+	bool isFull() {
+		if (top == NULL && size() >= SIZE)
 			return true;
 		else
 			return false;
 	}
 
 	bool isEmpty() {
-		if (top == MAX_STACK - 1)
+		if (top != NULL)
 			return true;
 		else
 			return false;
